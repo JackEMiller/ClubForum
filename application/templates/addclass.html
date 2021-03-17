@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Class</title>
+</head>
+<body>
+    <form name="class form"  method="POST">
+                <p> Customer: </p>
+                <select name= customer method="POST" action="/">
+                {% for customer in customers %}
+                <option value= "{{customer.id}} {{customer.first_name}}" SELECTED>{{customer.id}} {{customer.first_name}}</option>"
+                {% endfor %}
+                </select>
+                <p> Product </p>
+                <select name= product method="POST" action="/">
+                {% for product in products %}
+                <option value= "{{product.id}} {{product.name}}" SELECTED>{{product.id}} {{product.name}}</option>"
+                {% endfor %}
+                </select>
+                <p></p>
+                <button type="submit" name="submitbutton" value="transaction">Submit</button>
+            </form>
+</body>
+</html>
