@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Customer</title>
+    <title>Update Member</title>
 </head>
 <body>
-            <form name="customer"  method="POST">
-            <p>input first name</p>
-            <input name="fname" value="{{customer.first_name}}">
-            <p>input second name</p>
-            <input name="sname" value="{{customer.last_name}}">
-            <p> </p>
-                <button type="submit" name="submitbutton" value="customer">update</button>
+            <form name="member"  method="POST">
+                <p>input name</p>
+                <input name="name" value="{{ member.name }}">
+                <p>input level</p>
+                <input name="level" value="{{ member.level }}">
+                <p>input affiliation</p>
+                <input name="affiliation" value="{{ member.affiliation }}">
+                <p> </p>
+                <button type="submit" name="submitbutton" value="member">Submit</button>
             </form>
 </body>
 </html>

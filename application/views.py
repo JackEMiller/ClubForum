@@ -1,20 +1,34 @@
-from main import app
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, blueprints
 from init_app import Users, Classes, ClassesMember, ClassesTechnique, Techniques, Members, db
 
+app = blueprints.Blueprint('app',__name__,static_folder='templates')
 
-@app.route('/viewclass/<int:id>', methods=['GET','POST'])
-def viewclass(id):
-    class_ = Classes.query.get(id)
-    techniques = ClassesTechnique.filter_by(class_id = id).all()
-    members = ClassesMember.filter_by(class_id = id).all()
-    techniques_list = []
-    members_list = []
-    for technique in techniques:
-        techniques_list.append(Techniques.filter_by(id = technique.technique_id).first())
-    for member in members:
-        members_list.append(Techniques.filter_by(id = member.member_id).first())
-    return render_template('viewclass.html',currentclass = class_, members = members, techniques = techniques)
+
+@app.route('/viewclass/<int:typeof>/<int:id>', methods=['GET','POST'])
+def viewclass(typeof,id):
+    classes_ = None
+    printarray = []
+    if typeof == 0:
+        classes_ = Classes.query.all()
+    if typeof == 1:
+        classes_ = Classes.query.filter_by(member_id = id).all()
+    if typeof == 2:
+        classes_ = Classes.query.filter_by(technqiue_id = id).all()
+    for class_ in classes_:
+        techs = []
+        membs = []
+        techniques = ClassesTechnique.query.filter_by(class_id=class_.id).all()
+        members = ClassesMember.query.filter_by(class_id=class_.id).all()
+        for technique in techniques:
+            a = Techniques.query.filter_by(id = technique.technique_id).first()
+            if a is not None:
+                techs.append([a.name,a.difficulty,a.description])
+        for member in members:
+            a = Members.query.filter_by(id = member.member_id).first()
+            if a is not None:
+                membs.append([a.name,a.level,a.affiliation])
+        printarray.append([class_,techs,membs])
+    return render_template('viewclass.html', classarray=printarray)
 
 
 @app.route('/deleteclass/<int:cid>')
@@ -24,8 +38,8 @@ def deleteclass(cid):
     return redirect('/view/0')
 
 
-@app.route('/updatetransaction/<int:cid>/<int:tid>', methods=['GET','POST'])
-def updatetransaction(cid,tid):
+@app.route('/updateclass/<int:cid>/<int:tid>', methods=['GET','POST'])
+def updateclass(cid,tid):
     item = Classes.query.get(cid)
     if request.method == 'POST':
         c_id = request.form['customer']
@@ -103,15 +117,15 @@ def view(error):
         errortext = "Can't delete product that has transactions, please delete transactions first"
     members = Members.query.all()
     techniques = Techniques.query.all()
-    return render_template('view.html',customers=members, products=techniques, errortext=errortext)
+    return render_template('view.html',members=members, techniques=techniques, errortext=errortext)
 
 
 @app.route('/deletemember/<int:id>')
 def deletemember(id):
-    if ClassesMember.query.filter_by(customer_id = id).first() is not None:
+    if ClassesMember.query.filter_by(member_id = id).first() is not None:
         return redirect('/view/1')
     else:
-        item = Members.query.get(id)
+        item = Members.query.filter_by(id=id).first()
         db.session.delete(item)
         db.session.commit()
         return redirect('/view/0')
@@ -119,7 +133,7 @@ def deletemember(id):
 
 @app.route('/updatemember/<int:id>', methods=['GET','POST'])
 def updatemember(id):
-    item = Members.query.get(id)
+    item = Members.query.filter_by(id=id).first()
     if request.method == 'POST':
         texta = request.form['name']
         textb = request.form['level']
@@ -129,12 +143,12 @@ def updatemember(id):
         item.affiliation = textc
         db.session.commit()
         return redirect('/view/0')
-    return render_template('updatemember.html', customer=item)
+    return render_template('updatemember.html', member=item)
 
 
 @app.route('/updatetechnique/<int:id>', methods=['GET','POST'])
 def updatetechnique(id):
-    item = Techniques.query.get(id)
+    item = Techniques.query.filter_by(id=id).first()
     if request.method == 'POST':
         texta = request.form['name']
         textb = request.form['difficulty']
@@ -144,41 +158,75 @@ def updatetechnique(id):
         item.description = textc
         db.session.commit()
         return redirect('/view/0')
-    return render_template('updatetechnique.html', product=item)
+    return render_template('updatetechnique.html', technique=item)
 
 
 @app.route('/deletetechnique/<int:id>')
 def deletetechnique(id):
-    if Techniques.query.filter_by(product_id = id).first() is not None:
+    if ClassesTechnique.query.filter_by(technique_id = id).first() is not None:
         return redirect('/view/2')
     else:
-        item = Techniques.query.get(id)
+        item = Techniques.query.filter_by(id = id).first()
         db.session.delete(item)
         db.session.commit()
         return redirect('/view/0')
 
 
+@app.route('/addclass/<int:studentcount>/<int:techniquecount>', methods=['POST','GET'])
+def addclass(studentcount,techniquecount):
+    sarray = []
+    tarray = []
+    for i in range(1,studentcount+1):
+        sarray.append(i)
+    for i in range(1, techniquecount+1):
+        tarray.append(i)
+    techs = Techniques.query.all()
+    membs = Members.query.all()
+    if request.method == 'POST':
+        classdate = request.form['classdate']
+        newclass = Classes(date=classdate)
+        db.session.add(newclass)
+        db.session.commit()
+        for i in range(1, studentcount + 1):
+            print(i)
+            membername = request.form[str(i)]
+            print(membername)
+            newinteresct = ClassesMember(class_id = newclass.id, member_id = Members.query.
+                                         filter_by(name=membername).first().id)
+            db.session.add(newinteresct)
+            db.session.commit()
+        for i in range(1, techniquecount + 1):
+            print(i)
+            techniquename = request.form[str(i)+"a"]
+            print(techniquename)
+            newinteresct = ClassesTechnique(class_id = newclass.id, technique_id = Techniques.query.
+                                            filter_by(name=techniquename).first().id)
+            db.session.add(newinteresct)
+            db.session.commit()
+        return redirect('/viewclass/0/0')
+    return render_template('addclass.html', studentcount=sarray,techniquecount=tarray,techniques=techs,
+                           students=membs)
+
+
 @app.route('/view/<int:error>', methods=['POST'])
 def view_post(error):
     str = request.form['submitbutton']
-    if str == "product":
+    if str == "technique":
         texta = request.form['name']
-        textb = request.form['price']
-        new_product = Techniques(name=texta, price=textb)
-        db.session.add(new_product)
+        textb = request.form['difficulty']
+        textc = request.form['description']
+        new_technique = Techniques(name=texta, difficulty=textb, description=textc)
+        db.session.add(new_technique)
         db.session.commit()
-    if str == "customer":
-        texta = request.form['fname']
-        textb = request.form['sname']
-        new_customer = Members(first_name=texta, last_name=textb)
-        db.session.add(new_customer)
+    if str == "member":
+        texta = request.form['name']
+        textb = request.form['level']
+        textc = request.form['affiliation']
+        new_member = Members(name=texta, level=textb, affiliation=textc)
+        db.session.add(new_member)
         db.session.commit()
-    if str == "transaction":
-        cid = request.form['customer']
-        pid = request.form['product']
-        cid = cid.split()
-        pid = pid.split()
-        new_transaction = Classes(customer_id=cid[0], product_id=pid[0])
-        db.session.add(new_transaction)
-        db.session.commit()
+    if str == "addclass":
+        texta = request.form['studentscount']
+        textb = request.form['techniquescount']
+        return redirect('/addclass/'+texta+'/'+textb)
     return redirect('/view/0')

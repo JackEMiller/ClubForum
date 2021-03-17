@@ -12,88 +12,103 @@
     logged in as {{ user }}
 </p>
 <p>
-    <a href="{{ url_for('index') }}">Log out</a>
+    <a href="{{ url_for('app.index') }}">Log out</a>
 </p>
 <p style="color:red">
     {{ errortext }}
 </p>
 <table style width="100%">
     <tr>
-        <th style="text-align:left" > Customer input </th>
-        <th style="text-align:left" > Product input </th>
-        <th style="text-align:left" > Transaction input </th>
+        <th style="text-align:left" > Member input </th>
+        <th style="text-align:left" > Technique input </th>
+        <th style="text-align:left" > Class input </th>
     </tr>
     <tr>
         <td>
-            <form name="customer"  method="POST">
-            <p>input first name</p>
-            <input name="fname">
-            <p>input second name</p>
-            <input name="sname">
-            <p> </p>
-                <button type="submit" name="submitbutton" value="customer">Submit</button>
+            <form name="member"  method="POST">
+                <p>input name</p>
+                <input name="name">
+                <p>input level</p>
+                <input name="level">
+                <p>input affiliation</p>
+                <input name="affiliation">
+                <p> </p>
+                    <button type="submit" name="submitbutton" value="member">Submit</button>
             </form>
         </td>
         <td>
-            <form name="product" method="POST">
-            <p>input name</p>
-            <input name="name">
-            <p>input price</p>
-            <input name="price">
-                <p></p>
-            <button type="submit" name="submitbutton" value="product">Submit</button>
+            <form name="technique" method="POST">
+                <p>input name</p>
+                <input name="name">
+                <p>input difficulty</p>
+                <input name="difficulty">
+                <p>input description</p>
+                <input name="description">
+                    <p></p>
+                <button type="submit" name="submitbutton" value="technique">Submit</button>
             </form>
         </td>
         <td>
-            <form name="transaction form"  method="POST">
-                <p> Customer: </p>
-                <select name= customer method="POST" action="/">
-                {% for customer in customers %}
-                <option value= "{{customer.id}} {{customer.first_name}}" SELECTED>{{customer.id}} {{customer.first_name}}</option>"
-                {% endfor %}
+            <form name="class" method="POST">
+                <p>input date</p>
+                <input type="date" name="classdate"
+                value="2021-03-22"
+                min="2021-01-01" max="2025-12-31">
+                <p>amount of students</p>
+                <select name="studentscount">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
-                <p> Product </p>
-                <select name= product method="POST" action="/">
-                {% for product in products %}
-                <option value= "{{product.id}} {{product.name}}" SELECTED>{{product.id}} {{product.name}}</option>"
-                {% endfor %}
+                <p>amount of techniques</p>
+                <select name="techniquescount">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                 </select>
-                <p></p>
-                <button type="submit" name="submitbutton" value="transaction">Submit</button>
+                    <p></p>
+                <button type="submit" name="submitbutton" value="addclass">Submit</button>
             </form>
         </td>
     </tr>
 </table>
+<p><a href="/viewclass/0/0">View classes</a></p>
 <table>
     <tr>
-    <th>Customers</th>
+    <th>Members</th>
         <th></th>
-    <th>Products</th>
+    <th>Techniques</th>
     </tr>
     <tr>
         <td>
             <div class="table1">
-        {% if customers|length < 1 %}
+        {% if members|length < 1 %}
     <h4 style="text-align: center">empty table<a href="/view/0">add some data</a> </h4>
     {% else %}
     <table>
         <tr>
             <th>ID</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Affiliation</th>
             <th>Actions</th>
         </tr>
-        {% for customer in customers %}
+        {% for member in members %}
             <tr>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.first_name }}</td>
-                <td>{{ customer.last_name }}</td>
+                <td>{{ member.id }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.level }}</td>
+                <td>{{ member.affiliation }}</td>
                 <td>
-                    <a href="/deletecustomer/{{customer.id}}">Delete</a>
+                    <a href="/deletemember/{{member.id}}">Delete</a>
                     <br>
-                    <a href="/updatecustomer/{{customer.id}}">Update</a>
+                    <a href="/updatemember/{{member.id}}">Update</a>
                     <br>
-                    <a href="/viewtransaction/{{customer.id}}">Transactions</a>
+                    <a href="/viewclass/1/{{member.id}}">View classes</a>
                 </td>
             </tr>
         {% endfor %}
@@ -106,25 +121,29 @@
         </td>
         <td>
             <div class="table2">
-        {% if products|length < 1 %}
+        {% if techniques|length < 1 %}
     <h4 style="text-align: center">empty table<a href="/view/0">add some data</a> </h4>
     {% else %}
     <table>
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Price</th>
+            <th>Difficulty</th>
+            <th>Description</th>
             <th>Actions</th>
         </tr>
-        {% for product in products %}
+        {% for technique in techniques %}
             <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.price }}</td>
+                <td>{{ technique.id }}</td>
+                <td>{{ technique.name }}</td>
+                <td>{{ technique.difficulty }}</td>
+                <td>{{ technique.description }}</td>
                 <td>
-                    <a href="/deleteproduct/{{product.id}}">Delete</a>
+                    <a href="/deletetechnique/{{technique.id}}">Delete</a>
                     <br>
-                    <a href="/updateproduct/{{product.id}}">Update</a>
+                    <a href="/updatetechnique/{{technique.id}}">Update</a>
+                    <br>
+                    <a href="/viewclass/2/{{technique.id}}">View classes</a>
                 </td>
             </tr>
         {% endfor %}

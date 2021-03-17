@@ -5,13 +5,15 @@
     <title>Update Product</title>
 </head>
 <body>
-            <form name="product"  method="POST">
-            <p>input name</p>
-            <input name="name" value="{{product.name}}">
-            <p>input price</p>
-            <input name="price" value="{{product.price}}">
-            <p> </p>
-                <button type="submit" name="submitbutton" value="customer">update</button>
+            <form name="technique" method="POST">
+                <p>input name</p>
+                <input name="name" value="{{ technique.name }}">
+                <p>input difficulty</p>
+                <input name="difficulty" value="{{ technique.difficulty }}">
+                <p>input description</p>
+                <input name="description" value="{{ technique.description }}">
+                <p></p>
+                <button type="submit" name="submitbutton" value="technique">Submit</button>
             </form>
 </body>
 </html>
