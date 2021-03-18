@@ -33,34 +33,84 @@ def viewclass(typeof,id):
 
 @app.route('/deleteclass/<int:cid>')
 def deleteclass(cid):
-    item = Classes.query.get(cid)
+    item = Classes.query.filter_by(id=cid).first()
+    techniques = ClassesTechnique.query.filter_by(class_id=cid)
+    members = ClassesMember.query.filter_by(class_id=cid)
+    for technique in techniques:
+        db.session.delete(technique)
+    for member in members:
+        db.session.delete(member)
+    db.session.commit()
+    db.session.delete(item)
+    db.session.commit()
+    return redirect('/viewclass/0/0')
 
-    return redirect('/view/0')
+
+@app.route('/addupdatemember/<int:cid>')
+def addupdatemember(cid):
+    member = Techniques.query.first()
+    newmemclass = ClassesMember(class_id=cid,member_id=member.id)
+    db.session.add(newmemclass)
+    db.session.commit()
+    return redirect('/updateclass/'+str(cid))
 
 
-@app.route('/updateclass/<int:cid>/<int:tid>', methods=['GET','POST'])
-def updateclass(cid,tid):
-    item = Classes.query.get(cid)
+@app.route('/addupdatetechnique/<int:cid>')
+def addupdatetechnique(cid):
+    technique = Techniques.query.first()
+    newtechclass = ClassesTechnique(class_id=cid,technique_id=technique.id)
+    db.session.add(newtechclass)
+    db.session.commit()
+    return redirect('/updateclass/'+str(cid))
+
+
+@app.route('/deleteupdatetechnique/<int:cid>')
+def deleteupdatetechnique(cid):
+    item = ClassesTechnique.query.filter_by(class_id = cid).first()
+    db.session.delete(item)
+    db.session.commit()
+    return redirect('/updateclass/'+str(cid))
+
+
+@app.route('/deleteupdatemember/<int:cid>')
+def deleteupdatemember(cid):
+    item = ClassesMember.query.filter_by(class_id = cid).first()
+    db.session.delete(item)
+    db.session.commit()
+    return redirect('/updateclass/'+str(cid))
+
+
+@app.route('/updateclass/<int:cid>', methods=['GET','POST'])
+def updateclass(cid):
+    if request.method == 'GET':
+        item = Classes.query.filter_by(id=cid).first()
+        alltechniques = Techniques.query.all()
+        allmembers= Members.query.all()
+        currenttechniques = ClassesTechnique.query.filter_by(class_id = cid).all()
+        currentmembers = ClassesMember.query.filter_by(class_id=cid).all()
+        return render_template('updateclass.html', currentclass=item, techniques=alltechniques, members=allmembers,
+                               currentmembers=currentmembers,currenttechniques=currenttechniques)
     if request.method == 'POST':
-        c_id = request.form['customer']
-        pid = request.form['product']
-        c_id = c_id.split()
-        pid = pid.split()
-        item.customer_id = c_id[0]
-        item.product_id = pid[0]
-        db.session.add(item)
+        item = Classes.query.filter_by(id=cid).first()
+        techniques = ClassesTechnique.query.filter_by(class_id=cid).all()
+        members = ClassesMember.query.filter_by(class_id=cid).all()
+        for tech in techniques:
+            db.session.delete(tech)
+        for mem in members:
+            db.session.delete(mem)
         db.session.commit()
-        return redirect('/viewtransaction/'+str(cid))
-    else:
-        customers_id = []
-        customers = Members.query.all()
-        for customer in customers:
-            customers_id.append(str(customer.id) + " " + customer.first_name)
-        products_id = []
-        products = Techniques.query.all()
-        for product in products:
-            products_id.append(str(product.id) + " " + product.name)
-        return render_template('updatetransaction.html',customers = customers_id,products = products_id)
+        item.date = request.form['classdate']
+        for mem in members:
+            memberid = request.form[str(mem.id)]
+            newinteresct = ClassesMember(class_id = cid, member_id = memberid)
+            db.session.add(newinteresct)
+            db.session.commit()
+        for tech in techniques:
+            techniqueid = request.form[str(tech.id)]
+            newinteresct = ClassesTechnique(class_id = cid, technique_id = techniqueid)
+            db.session.add(newinteresct)
+            db.session.commit()
+        return redirect('/viewclass/0/0')
 
 
 @app.route('/signup', methods=['GET','POST'])
@@ -188,17 +238,13 @@ def addclass(studentcount,techniquecount):
         db.session.add(newclass)
         db.session.commit()
         for i in range(1, studentcount + 1):
-            print(i)
             membername = request.form[str(i)]
-            print(membername)
             newinteresct = ClassesMember(class_id = newclass.id, member_id = Members.query.
                                          filter_by(name=membername).first().id)
             db.session.add(newinteresct)
             db.session.commit()
         for i in range(1, techniquecount + 1):
-            print(i)
             techniquename = request.form[str(i)+"a"]
-            print(techniquename)
             newinteresct = ClassesTechnique(class_id = newclass.id, technique_id = Techniques.query.
                                             filter_by(name=techniquename).first().id)
             db.session.add(newinteresct)

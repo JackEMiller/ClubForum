@@ -2,24 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Transaction</title>
+    <title>New Class</title>
 </head>
 <body>
-<form name="transaction form"  method="POST">
-    <p> Update given class: </p>
-    <p> Customer: </p>
-    <select name= customer method="GET" action="/">
-    {% for customer in customers %}
-    <option value= "{{customer}}" SELECTED>{{customer}}</option>"
-    {% endfor %}
-    </select>
-    <p> Product </p>
-    <select name= product method="GET" action="/">
-    {% for product in products %}
-    <option value= "{{product}}" SELECTED>{{product}}</option>"
-    {% endfor %}
-    </select>
-    <button type="submit" name="submitbutton" value="transaction">Submit</button>
-    </form>
+    <form name="class form"  method="POST">
+                <p>input date</p>
+                <input type="date" name="classdate"
+                value="2021-03-22"
+                min="2021-01-01" max="2025-12-31">
+                <p> Select members </p>
+                <p><a href="/addupdatemember/{{ currentclass.id }}">add another member</a></p>
+                <p><a href="/deleteupdatemember/{{ currentclass.id }}">remove a member</a></p>
+                {% for member in currentmembers %}
+                    <select name="{{ member.id }}" >
+                    {% for mem in members %}
+                        {% if  mem.id == member.member_id  %}
+                        <option value= "{{ mem.id }}" SELECTED>{{mem.name}}</option>"
+                        {% else %}
+                        <option value= "{{ mem.id }}" >{{mem.name}}</option>"
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                {% endfor %}
+                <p> Select techniques </p>
+                <p><a href="/addupdatetechnique/{{ currentclass.id }}">add another technique</a></p>
+                <p><a href="/deleteupdatetechnique/{{ currentclass.id }}">remove a technique</a></p>
+                 {% for technique in currenttechniques %}
+                    <select name="{{ technique.id }}" >
+                    {% for tech in techniques %}
+                        {% if  tech.id  ==  technique.technique_id %}
+                        <option value= "{{ tech.id }}" SELECTED>{{tech.name}}</option>"
+                        {% else %}
+                        <option value= "{{ tech.id }}" >{{tech.name}}</option>"
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                {% endfor %}
+                <p></p>
+                <button type="submit" name="submitbutton" value="class">Submit</button>
+            </form>
 </body>
 </html>
