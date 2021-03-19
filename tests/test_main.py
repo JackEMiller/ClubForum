@@ -9,7 +9,7 @@ import datetime
 class TestBase(TestCase):
 
     def create_app(self):
-        app.config.update(SQLALCHEMY_DATABASE_URI="mysql+pymysql://root:root@localhost/db",
+        app.config.update(SQLALCHEMY_DATABASE_URI="mysql+pymysql://root@34.89.4.172/db",
                 SECRET_KEY='TEST_SECRET_KEY',
                 DEBUG=True,
                 WTF_CSRF_ENABLED=False)
