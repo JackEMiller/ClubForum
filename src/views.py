@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, session, redirect, url_for, blueprints
-from init_app import Users, Classes, ClassesMember, ClassesTechnique, Techniques, Members, db
+try:
+    from src.models import Users, Classes, ClassesMember, ClassesTechnique, Techniques, Members, db
+except:
+    from models import Users, Classes, ClassesMember, ClassesTechnique, Techniques, Members, db
 
 app = blueprints.Blueprint('app',__name__,static_folder='templates')
 
-
+# tested
 @app.route('/viewclass/<int:typeof>/<int:id>', methods=['GET','POST'])
 def viewclass(typeof,id):
     classes_ = None
@@ -11,9 +14,9 @@ def viewclass(typeof,id):
     if typeof == 0:
         classes_ = Classes.query.all()
     if typeof == 1:
-        classes_ = Classes.query.filter_by(member_id = id).all()
+        classes_ = ClassesMember.query.filter_by(member_id = id).all()
     if typeof == 2:
-        classes_ = Classes.query.filter_by(technqiue_id = id).all()
+        classes_ = ClassesTechnique.query.filter_by(technique_id = id).all()
     for class_ in classes_:
         techs = []
         membs = []
@@ -30,7 +33,7 @@ def viewclass(typeof,id):
         printarray.append([class_,techs,membs])
     return render_template('viewclass.html', classarray=printarray)
 
-
+# tested
 @app.route('/deleteclass/<int:cid>')
 def deleteclass(cid):
     item = Classes.query.filter_by(id=cid).first()
@@ -45,16 +48,16 @@ def deleteclass(cid):
     db.session.commit()
     return redirect('/viewclass/0/0')
 
-
+# tested
 @app.route('/addupdatemember/<int:cid>')
 def addupdatemember(cid):
-    member = Techniques.query.first()
+    member = Members.query.first()
     newmemclass = ClassesMember(class_id=cid,member_id=member.id)
     db.session.add(newmemclass)
     db.session.commit()
     return redirect('/updateclass/'+str(cid))
 
-
+# tested
 @app.route('/addupdatetechnique/<int:cid>')
 def addupdatetechnique(cid):
     technique = Techniques.query.first()
@@ -63,7 +66,7 @@ def addupdatetechnique(cid):
     db.session.commit()
     return redirect('/updateclass/'+str(cid))
 
-
+# tested
 @app.route('/deleteupdatetechnique/<int:cid>')
 def deleteupdatetechnique(cid):
     item = ClassesTechnique.query.filter_by(class_id = cid).first()
@@ -71,7 +74,7 @@ def deleteupdatetechnique(cid):
     db.session.commit()
     return redirect('/updateclass/'+str(cid))
 
-
+# tested
 @app.route('/deleteupdatemember/<int:cid>')
 def deleteupdatemember(cid):
     item = ClassesMember.query.filter_by(class_id = cid).first()
@@ -79,7 +82,7 @@ def deleteupdatemember(cid):
     db.session.commit()
     return redirect('/updateclass/'+str(cid))
 
-
+# tested
 @app.route('/updateclass/<int:cid>', methods=['GET','POST'])
 def updateclass(cid):
     if request.method == 'GET':
@@ -112,7 +115,7 @@ def updateclass(cid):
             db.session.commit()
         return redirect('/viewclass/0/0')
 
-
+# tested
 @app.route('/signup', methods=['GET','POST'])
 def signup():
     errortext = ""
@@ -136,7 +139,7 @@ def signup():
             return render_template('signup.html', errortext=errortext)
     return render_template('signup.html')
 
-
+# tested
 @app.route('/', methods=['GET','POST'])
 def index():
     errortext = ""
@@ -157,19 +160,19 @@ def index():
     else:
         return render_template('index.html')
 
-
+# tested
 @app.route('/view/<int:error>')
 def view(error):
     errortext = ""
     if error == 1:
-        errortext = "Can't delete customer that has transactions, please delete transactions first"
+        errortext = "Can't delete "
     if error == 2:
-        errortext = "Can't delete product that has transactions, please delete transactions first"
+        errortext = "Can't delete "
     members = Members.query.all()
     techniques = Techniques.query.all()
     return render_template('view.html',members=members, techniques=techniques, errortext=errortext)
 
-
+# tested
 @app.route('/deletemember/<int:id>')
 def deletemember(id):
     if ClassesMember.query.filter_by(member_id = id).first() is not None:
@@ -180,7 +183,7 @@ def deletemember(id):
         db.session.commit()
         return redirect('/view/0')
 
-
+# tested
 @app.route('/updatemember/<int:id>', methods=['GET','POST'])
 def updatemember(id):
     item = Members.query.filter_by(id=id).first()
@@ -195,7 +198,7 @@ def updatemember(id):
         return redirect('/view/0')
     return render_template('updatemember.html', member=item)
 
-
+# tested
 @app.route('/updatetechnique/<int:id>', methods=['GET','POST'])
 def updatetechnique(id):
     item = Techniques.query.filter_by(id=id).first()
@@ -210,7 +213,7 @@ def updatetechnique(id):
         return redirect('/view/0')
     return render_template('updatetechnique.html', technique=item)
 
-
+# tested
 @app.route('/deletetechnique/<int:id>')
 def deletetechnique(id):
     if ClassesTechnique.query.filter_by(technique_id = id).first() is not None:
@@ -221,7 +224,7 @@ def deletetechnique(id):
         db.session.commit()
         return redirect('/view/0')
 
-
+# tested
 @app.route('/addclass/<int:studentcount>/<int:techniquecount>', methods=['POST','GET'])
 def addclass(studentcount,techniquecount):
     sarray = []
@@ -253,7 +256,7 @@ def addclass(studentcount,techniquecount):
     return render_template('addclass.html', studentcount=sarray,techniquecount=tarray,techniques=techs,
                            students=membs)
 
-
+# tested
 @app.route('/view/<int:error>', methods=['POST'])
 def view_post(error):
     str = request.form['submitbutton']
