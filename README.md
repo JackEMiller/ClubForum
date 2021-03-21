@@ -2,50 +2,28 @@
 # Club Forum
 A forum for a martial arts club to record members, techniques and details of classes.
 
-A user manual has been made to guide new users on how to use the application:
-
-*insert link & image here*
-
-A design diary and design process document has been made to track and present the process of building the application:
-
-*insert link & image here*
-
 ## Software Design:
 ### Project management:
 This project has used Azure boards to manage the tasks performed to build the software:
 
-*insert image here*
+[![Board Status](https://dev.azure.com/JMiller10074/afdffd25-69bf-4fba-9fbd-056a02328592/29fd3513-e2ad-42c4-bc9e-153b38e4d8d1/_apis/work/boardbadge/4afc58ad-4793-4732-bbd2-9e2219edcea5)](https://dev.azure.com/JMiller10074/afdffd25-69bf-4fba-9fbd-056a02328592/_boards/board/t/29fd3513-e2ad-42c4-bc9e-153b38e4d8d1/Microsoft.RequirementCategory)
 
-For use cases, database design and other graphical documentation Lucid boards was used to build these:
-
-*insert image here*
+For use cases, database design and other graphical documentation Lucid boards was used to build these
 
 Lucid boards has many templates and pre-loaded shapes for quick and easy construction of graphical documentaion, I would highly recommend this.
 
 ### Architecture and software tools used:
-Google cloud will be used to host the virtual envinronment:
+Google cloud will be used to host the virtual envinronment
 
-*insert image here*
+MySQL is used for the database logic and storage
 
-MySQL is used for the database logic and storage:
+The main logic is written in Python
 
-*insert image here*
+Flask is used to build the web framework of the application
 
-The main logic is written in Python:
+A Version Control System is used to manage changes to the application and development, this is used with Git in conjuction with GitHub to host
 
-*insert image here*
-
-Flask is used to build the web framework of the application:
-
-*insert image here*
-
-A Version Control System is used to manage changes to the application and development, this is used with Git in conjuction with GitHub to host:
-
-*insert image here*
-
-The PyTest and unit test libraries are used to test the CRUD functions of the application, using white and black box testing methods:
-
-*insert image here*
+The PyTest and unit test libraries are used to test the CRUD functions of the application, using white and black box testing methods
 
 ## Other tools and references:
 ### Full list of tools used:
@@ -69,3 +47,6 @@ The PyTest and unit test libraries are used to test the CRUD functions of the ap
 - Flask documentation 
 - Flask tutorials
 - Google cloud documentaion
+- Dara Oladapo
+
+For a full breakdown please download this presentation:
