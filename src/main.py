@@ -1,9 +1,5 @@
-try:
-    from src.models import create_app
-    from src import views
-except:
-    from models import create_app
-    import views
+from models import create_app
+fmport views
 
 app = create_app()
 app.register_blueprint(views.app)
