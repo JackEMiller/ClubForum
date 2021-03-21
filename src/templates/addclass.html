@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Class</title>
+</head>
+<body>
+    <form name="class form"  method="POST">
+                <p>input date</p>
+                <input type="date" name="classdate"
+                value="2021-03-22"
+                min="2021-01-01" max="2025-12-31">
+                <p> Select members </p>
+                {% for item in studentcount %}
+                    <select name="{{ item }}" method="POST" action="/">
+                    {% for student in students %}
+                        <option value= "{{ student.name }}" SELECTED>{{student.name}}</option>"
+                    {% endfor %}
+                    </select>
+                {% endfor %}
+                <p> Select techniques </p>
+                 {% for item in techniquecount %}
+                    <select name="{{ item }}a" method="POST" action="/">
+                    {% for technique in techniques %}
+                        <option value= "{{ technique.name }}" SELECTED>{{technique.name}}</option>"
+                    {% endfor %}
+                    </select>
+                {% endfor %}
+                <p></p>
+                <button type="submit" name="submitbutton" value="class">Submit</button>
+            </form>
+</body>
+</html>

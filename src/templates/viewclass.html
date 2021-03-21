@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classes</title>
+</head>
+<body>
+<p> <a href="/view/0">go back</a></p>
+    <div class="table1">
+        {% if classarray|length < 1 %}
+    <h4 style="text-align: center">No classes available for current selection<a href="/view/0">add one here</a> </h4>
+    {% else %}
+        <p> </p>
+    <table>
+        <tr>
+            <th>Class ID</th>
+            <th>Date</th>
+            <th>Techniques</th>
+            <th>Members</th>
+            <th>Actions</th>
+        </tr>
+        {% for class in classarray %}
+            <tr>
+                <td>
+                    {{ class[0].id }}
+                </td>
+                <td>
+                    {{ class[0].date }}
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Difficulty</th>
+                            <th>Description</th>
+                        </tr>
+                        {% for item in class[1] %}
+                        <tr>
+                        <td>
+                            {{ item[0] }}
+                        </td>
+                        <td>
+                            {{ item[1] }}
+                        </td>
+                        <td>
+                            {{ item[2] }}
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Level</th>
+                        </tr>
+                        {% for item in class[2] %}
+                        <tr>
+                        <td>
+                            {{ item[0] }}
+                        </td>
+                        <td>
+                            {{ item[1] }}
+                        </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                <td>
+                    <a href="/deleteclass/{{ class[0].id }}">Delete</a>
+                    <br>
+                    <a href="/updateclass/{{ class[0].id }}">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+</body>
+</html>
