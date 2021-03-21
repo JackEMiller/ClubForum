@@ -50,3 +50,8 @@ The PyTest and unit test libraries are used to test the CRUD functions of the ap
 - Dara Oladapo
 
 For a full breakdown please download this presentation:
+
+## License:
+This product is licensed under the MIT license
+
+## Current Version 1.0.0
