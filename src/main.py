@@ -1,5 +1,5 @@
 from models import create_app
-fmport views
+import views
 
 app = create_app()
 app.register_blueprint(views.app)
