@@ -1,5 +1,8 @@
 from models import create_app
-import views
+try:
+    import views
+except:
+    from src import views
 
 app = create_app()
 app.register_blueprint(views.app)
