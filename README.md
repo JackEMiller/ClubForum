@@ -11,11 +11,27 @@ This project has used Azure boards to manage the tasks performed to build the so
 A sample cut of the board:
 ![boardcut](https://github.com/JackEMiller/ClubForum/blob/main/images/azureb1.PNG?raw=true)
 
-Azure Boards 
+Azure Boards cumulative flow diagram:
+![boarddiagram](https://github.com/JackEMiller/ClubForum/blob/main/images/workflow.PNG?raw=true)
 
 For use cases, database design and other graphical documentation Lucid boards was used to build these
 
 Lucid boards has many templates and pre-loaded shapes for quick and easy construction of graphical documentaion, I would highly recommend this.
+### Design documentation and diagrams
+Database table definitions:
+![dbdef](https://github.com/JackEMiller/ClubForum/blob/main/images/dbdefs.PNG?raw=true)
+
+Database entity relationship diagram:
+As you can see the Members and Techniques tables have a many-many relationship with the Classes table. So two intersection tables have been made.
+![dberd](https://github.com/JackEMiller/ClubForum/blob/main/images/dberd.PNG?raw=true)
+
+Use Case:
+Two users will be present, admin and member. A member cannot use the database manipulation functions and can only view data.
+![usecase](https://github.com/JackEMiller/ClubForum/blob/main/images/usecase.PNG?raw=true)
+
+GUI design:
+The design is based on a Finite State Machine. and routes between each state is defined as below:
+![fsm](https://github.com/JackEMiller/ClubForum/blob/main/images/fsm.PNG?raw=true)
 
 ### Architecture and software tools used:
 Google cloud will be used to host the virtual envinronment
@@ -26,7 +42,9 @@ The main logic is written in Python
 
 Flask is used to build the web framework of the application
 
-A Version Control System is used to manage changes to the application and development, this is used with Git in conjuction with GitHub to host
+A Version Control System is used to manage changes to the application and development, this is used with Git in conjuction with GitHub to host. The Dev branch is used to develop the application while Jenkins is linked to the main branch to host the application. To add a new feature or code when completed and tested, it is merged with the main branch. This allows development to happen while the application is live and ensures zero downtime:
+
+![git]()
 
 The PyTest and unit test libraries are used to test the CRUD functions of the application, using white and black box testing methods
 
