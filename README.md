@@ -54,4 +54,28 @@ For a full breakdown please download this presentation:
 ## License:
 This product is licensed under the MIT license
 
+## Risks involved
+- Anyone can become and admin and edit the database
+- Anyone can access the platform
+- Hosting is done via GCP, if all the credits are spent the application will not be running
+- There is no backup database, if the database is down the application fails
+- VM isn't scaled if more people access it than determined, they will not be able to connect
+
 ## Current Version 1.0.0
+### Using the application:
+The application is currently live on link: http://34.121.73.96:5000/
+
+You will see:
+
+login image
+
+If you do not have an account click the link to "sign up here"
+
+This will forward you to the signup page where you can create an account. Enter a username and password and click submit. If a red message saying "success" appears navigate back to the log in page and log in.
+
+This will direct you to the view page. The data for Members and Techniques are shown here along with the input for said tables. To submit data; add entrys to each respective field and press submit.
+
+view image
+
+To update an entry on either the Members or techniques page open the 
+
