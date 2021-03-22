@@ -8,6 +8,11 @@ This project has used Azure boards to manage the tasks performed to build the so
 
 [![Board Status](https://dev.azure.com/JMiller10074/afdffd25-69bf-4fba-9fbd-056a02328592/29fd3513-e2ad-42c4-bc9e-153b38e4d8d1/_apis/work/boardbadge/4afc58ad-4793-4732-bbd2-9e2219edcea5)](https://dev.azure.com/JMiller10074/afdffd25-69bf-4fba-9fbd-056a02328592/_boards/board/t/29fd3513-e2ad-42c4-bc9e-153b38e4d8d1/Microsoft.RequirementCategory)
 
+A sample cut of the board:
+![boardcut](https://github.com/JackEMiller/ClubForum/blob/main/images/azureb1.PNG?raw=true)
+
+Azure Boards 
+
 For use cases, database design and other graphical documentation Lucid boards was used to build these
 
 Lucid boards has many templates and pre-loaded shapes for quick and easy construction of graphical documentaion, I would highly recommend this.
