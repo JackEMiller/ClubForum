@@ -44,9 +44,13 @@ Flask is used to build the web framework of the application
 
 A Version Control System is used to manage changes to the application and development, this is used with Git in conjuction with GitHub to host. The Dev branch is used to develop the application while Jenkins is linked to the main branch to host the application. To add a new feature or code when completed and tested, it is merged with the main branch. This allows development to happen while the application is live and ensures zero downtime:
 
-![git]()
+![git](https://github.com/JackEMiller/ClubForum/blob/main/images/merge.PNG?raw=true)
 
-The PyTest and unit test libraries are used to test the CRUD functions of the application, using white and black box testing methods
+The PyTest and unit test libraries are used to test the CRUD functions of the application, using white and black box testing methods. The tests have covered all CRUD functions and loading/redirecting of pages:
+
+![tests](https://github.com/JackEMiller/ClubForum/blob/main/images/testcomplete.PNG?raw=true)
+
+As shown above a test coverage of 93% has been reached.
 
 ## Other tools and references:
 ### Full list of tools used:
