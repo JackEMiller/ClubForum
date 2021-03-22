@@ -94,15 +94,54 @@ The application is currently live on link: http://34.121.73.96:5000/
 
 You will see:
 
-login image
+![login](https://github.com/JackEMiller/ClubForum/blob/main/images/login.PNG?raw=true)
 
 If you do not have an account click the link to "sign up here"
 
 This will forward you to the signup page where you can create an account. Enter a username and password and click submit. If a red message saying "success" appears navigate back to the log in page and log in.
 
+![signup](https://github.com/JackEMiller/ClubForum/blob/main/images/signup.PNG?raw=true)
+
 This will direct you to the view page. The data for Members and Techniques are shown here along with the input for said tables. To submit data; add entrys to each respective field and press submit.
 
-view image
+![view](https://github.com/JackEMiller/ClubForum/blob/main/images/view.PNG?raw=true)
 
-To update an entry on either the Members or techniques page open the 
+Here we will add a member called "Jack":
 
+![addmember](https://github.com/JackEMiller/ClubForum/blob/main/images/submitmember.PNG?raw=true)
+
+After pressing submit the tables will be updated to show any new data:
+
+![deletemember](https://github.com/JackEMiller/ClubForum/blob/main/images/membertable1.PNG?raw=true)
+
+The links to the side of each entry on the table are to; delete the entry, update the entry and to view any classes the entry is related to. If we click "update" we will be forwarded to a new page where we can update the users information, in this case we will change "Jack" to "James":
+
+![updatemember](https://github.com/JackEMiller/ClubForum/blob/main/images/memberupdate.PNG?raw=true)
+
+After pressing submit we will be redirected back to the view page where the change is reflected in the Members table:
+
+![updatemember2](https://github.com/JackEMiller/ClubForum/blob/main/images/membertable2.PNG?raw=true)
+
+Now we will add a class, the class form on the rightmost side is used. Select the date and the number of members and techniques to add to this classe, in this case we will choose one for each:
+
+![addclass](https://github.com/JackEMiller/ClubForum/blob/main/images/classinput.PNG?raw=true)
+
+This will take us to a new page where we can select which member and technique to add to the class:
+
+![addclass2](https://github.com/JackEMiller/ClubForum/blob/main/images/classinput2.PNG?raw=true)
+
+After clicking submit we are taken to the view classes page, where the new class is added to the table:
+
+![viewclass2](https://github.com/JackEMiller/ClubForum/blob/main/images/classview.PNG?raw=true)
+
+We will now update the entry and add another technique to the class, the link "update" in the actions column is used. This brings us to the update class page:
+
+![viewclass2](https://github.com/JackEMiller/ClubForum/blob/main/images/classupdate.PNG?raw=true)
+
+To add another row to the technique section click the "Add another technique" link:
+
+![viewclass2](https://github.com/JackEMiller/ClubForum/blob/main/images/classupdate2.PNG?raw=true)
+
+Select another technique to add then click submit. This will redirect us to the view page where the change is reflected in the table:
+
+![viewclass2](https://github.com/JackEMiller/ClubForum/blob/main/images/classupdate3.PNG?raw=true)
