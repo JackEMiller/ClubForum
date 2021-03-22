@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, session, redirect, url_for, blueprints
-from models import Users, Classes, ClassesMember, ClassesTechnique, Techniques, Members, db
+try:
+    from models import Users, Classes, ClassesMember, ClassesTechnique, Techniques, Members, db
+except:
+    from src.models import Users, Classes, ClassesMember, ClassesTechnique, Techniques, Members, db
 
 app = blueprints.Blueprint('app',__name__,static_folder='templates')
 
